@@ -2,6 +2,16 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import config from 'config';
 
+export interface UserDocument extends mongoose.Document {
+  firstName: string;
+  lastName: string;
+  email: string;
+  bio?: string;
+  password: string;
+  avatar?: string;
+  website?: string;
+}
+
 const userSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true },
