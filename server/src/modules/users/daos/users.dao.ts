@@ -32,6 +32,8 @@ class UsersDao {
       isAmin: false,
     });
     await user.save();
-    console.log(user);
+    return user;
   }
 }
+
+export default new UsersDao();
