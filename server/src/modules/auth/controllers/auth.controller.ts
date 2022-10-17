@@ -8,7 +8,7 @@ const jwtSecret = process.env.JWT_SECRET;
 const tokenExpire = process.env.JWT_EXPIRE;
 
 class AuthController {
-  async createJwt(req: Request, res: Response) {
+  async createJWT(req: Request, res: Response) {
     try {
       const refreshId = req.body.userId + jwtSecret!;
       const salt = crypto.createSecretKey(crypto.randomBytes(16));

@@ -3,6 +3,7 @@ import AuthController from './controllers/auth.controller';
 import { Application } from 'express';
 import validateResource from '../common/middleware/validate.resource.middle';
 import { authSchema } from './schema/auth.schema';
+import AuthMiddleware from './middleware/auth.middleware';
 
 export class AuthRoutes extends CommonRoutesConfig {
   constructor(app: Application) {
@@ -13,7 +14,8 @@ export class AuthRoutes extends CommonRoutesConfig {
     this.app.post(
       '/api/auth',
       validateResource(authSchema),
-      AuthController.createJwt
+      AuthMiddleware.verifyUserPassword,
+      AuthController.createJWT
     );
 
     return this.app;

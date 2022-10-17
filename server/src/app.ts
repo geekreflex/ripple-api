@@ -1,4 +1,6 @@
-import './config/default';
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express, { Application } from 'express';
 import cors from 'cors';
 import { CommonRoutesConfig } from './modules/common/common.routes.config';
