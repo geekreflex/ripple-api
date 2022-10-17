@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import UsersService from '../services/users.service';
+import UsersService from '../services/user.service';
 import debug from 'debug';
 
 const log: debug.IDebugger = debug('app-users-middleare');
 
-class UsersMiddleware {
+class UserMiddleware {
   async validateSameEmailDoesntExit(
     req: Request,
     res: Response,
@@ -19,4 +19,4 @@ class UsersMiddleware {
   }
 }
 
-export default new UsersMiddleware();
+export default new UserMiddleware();

@@ -2,7 +2,7 @@ import mongooseService from '../../common/services/mongoose.service';
 import logger from '../../../utilities/logger';
 import { CreateUserDto } from '../dtos/create.user.dto';
 
-class UsersDao {
+class UserDao {
   users: Array<CreateUserDto> = [];
 
   Schema = mongooseService.getMongoose().Schema;
@@ -42,6 +42,12 @@ class UsersDao {
   async getUserByEmail(email: string) {
     return this.User.findOne({ email }).exec();
   }
+
+  async getUserByEmailWithPassword(email: string) {
+    return this.User.findOne({ email })
+      .select('_id email isAdmin +password')
+      .exec();
+  }
 }
 
-export default new UsersDao();
+export default new UserDao();
