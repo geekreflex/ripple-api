@@ -34,6 +34,14 @@ class UsersDao {
     await user.save();
     return user;
   }
+
+  async getUserById(userId: string) {
+    return this.User.findById(userId).exec();
+  }
+
+  async getUserByEmail(email: string) {
+    return this.User.findOne({ email }).exec();
+  }
 }
 
 export default new UsersDao();
