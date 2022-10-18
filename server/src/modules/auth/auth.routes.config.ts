@@ -4,6 +4,7 @@ import { Application } from 'express';
 import validateResource from '../common/middleware/validate.resource.middle';
 import { authSchema } from './schema/auth.schema';
 import AuthMiddleware from './middleware/auth.middleware';
+import JwtMiddleware from './middleware/jwt.middleware';
 
 export class AuthRoutes extends CommonRoutesConfig {
   constructor(app: Application) {
@@ -12,9 +13,17 @@ export class AuthRoutes extends CommonRoutesConfig {
 
   configureRoutes(): Application {
     this.app.post(
-      '/api/auth',
+      '/api/auth/login',
       validateResource(authSchema),
       AuthMiddleware.verifyUserPassword,
+      AuthController.createJWT
+    );
+
+    this.app.post(
+      '/api/auth/refresh-token',
+      JwtMiddleware.validateJWTNeeded,
+      JwtMiddleware.verifyRefreshBodyField,
+      JwtMiddleware.validRefreshNeeded,
       AuthController.createJWT
     );
 
