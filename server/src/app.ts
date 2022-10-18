@@ -8,6 +8,7 @@ import { UsersRoutes } from './modules/users/users.routes.config';
 import debug from 'debug';
 import logger from './utilities/logger';
 import { AuthRoutes } from './modules/auth/auth.routes.config';
+import helmet from 'helmet';
 
 const app: Application = express();
 const port = 8484;
@@ -16,6 +17,7 @@ const debugLog: debug.IDebugger = debug('app');
 
 app.use(cors());
 app.use(express.json());
+app.use(helmet());
 
 routes.push(new UsersRoutes(app));
 routes.push(new AuthRoutes(app));

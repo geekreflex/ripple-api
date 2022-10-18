@@ -39,7 +39,7 @@ class JwtMiddleware {
     }
   }
 
-  validateJWTNeeded(req: Request, res: Response, next: NextFunction) {
+  validJWTNeeded(req: Request, res: Response, next: NextFunction) {
     if (req.headers['authorization']) {
       try {
         const authorization = req.headers['authorization'].split(' ');

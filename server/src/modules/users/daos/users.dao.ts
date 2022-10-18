@@ -1,6 +1,6 @@
 import mongooseService from '../../common/services/mongoose.service';
 import logger from '../../../utilities/logger';
-import { CreateUserDto } from '../dtos/create.user.dto';
+import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 
 class UserDao {
   users: Array<CreateUserDto> = [];
@@ -16,6 +16,8 @@ class UserDao {
       isAdmin: { type: Boolean, default: false },
       bio: { type: String },
       website: { type: String },
+      followers: [{ type: this.Schema.Types.ObjectId, ref: 'User' }],
+      following: [{ type: this.Schema.Types.ObjectId, ref: 'User' }],
     },
     { timestamps: true }
   );
@@ -35,6 +37,13 @@ class UserDao {
     return user;
   }
 
+  async getUsers(limit = 25, page = 0) {
+    return this.User.find()
+      .limit(limit)
+      .skip(limit * page)
+      .exec();
+  }
+
   async getUserById(userId: string) {
     return this.User.findById(userId).exec();
   }
@@ -47,6 +56,14 @@ class UserDao {
     return this.User.findOne({ email })
       .select('_id email isAdmin +password')
       .exec();
+  }
+
+  async updateUserById(userId: string, userFields: UpdateUserDto) {
+    return this.User.findOneAndUpdate(
+      { _id: userId },
+      { $set: userFields },
+      { new: true }
+    ).exec();
   }
 }
 

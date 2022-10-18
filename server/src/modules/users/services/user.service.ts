@@ -1,7 +1,6 @@
 import { CRUD } from '../../common/interfaces/crud.interface';
 import UsersDao from '../daos/users.dao';
-import { CreateUserDto } from '../dtos/create.user.dto';
-import { UpdateUserDto } from '../dtos/update.user.dto';
+import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 import { omit } from 'lodash';
 
 class UserService implements CRUD {
@@ -10,8 +9,16 @@ class UserService implements CRUD {
     return omit((await user).toJSON(), 'password');
   }
 
+  async list(limit: number, page: number) {
+    return UsersDao.getUsers(limit, page);
+  }
+
   async readById(id: string) {
     return UsersDao.getUserById(id);
+  }
+
+  async updateById(id: string, resource: UpdateUserDto): Promise<any> {
+    return UsersDao.updateUserById(id, resource);
   }
 
   async getUserByEmail(email: string) {
