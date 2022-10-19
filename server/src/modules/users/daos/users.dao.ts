@@ -65,6 +65,35 @@ class UserDao {
       { new: true }
     ).exec();
   }
+
+  async followUser(userId: string, candidateId: string, action: string) {
+    console.log(userId, candidateId, action);
+    switch (action) {
+      case 'follow':
+        await Promise.all([
+          this.User.findByIdAndUpdate(userId, {
+            $addToSet: { following: candidateId },
+          }),
+          this.User.findByIdAndUpdate(candidateId, {
+            $addToSet: { followers: userId },
+          }),
+        ]);
+        break;
+      case 'unfollow':
+        await Promise.all([
+          this.User.findByIdAndUpdate(userId, {
+            $pull: { following: candidateId },
+          }),
+          this.User.findByIdAndUpdate(candidateId, {
+            $pull: { followers: userId },
+          }),
+        ]);
+        break;
+      default:
+        break;
+    }
+    return { done: true };
+  }
 }
 
 export default new UserDao();

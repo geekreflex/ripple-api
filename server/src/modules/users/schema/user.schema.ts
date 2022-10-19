@@ -28,3 +28,14 @@ export const updateUserSchema = object({
     website: string().url().optional().or(literal('')),
   }),
 });
+
+export const followUserSchema = object({
+  body: object({
+    candidateId: string({
+      required_error: 'Candidate ID is required',
+    }),
+    action: string({
+      required_error: 'Action type is requied',
+    }),
+  }),
+});

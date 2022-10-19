@@ -38,6 +38,13 @@ class UserController {
     const user = await UserService.updateById(req.params.userId, req.body);
     res.status(200).send({ user });
   }
+
+  async followUser(req: Request, res: Response) {
+    const { candidateId, action } = req.body;
+    const userId = res.locals.jwt.userId;
+    const done = await UserService.followUser(userId, candidateId, action);
+    res.status(200).send(done);
+  }
 }
 
 export default new UserController();

@@ -5,7 +5,11 @@ import PermissionMiddleware from '../common/middleware/common.permission.middlew
 import validateResource from '../common/middleware/validate.resource.middle';
 import UserController from './controllers/user.controller';
 import UserMiddleware from './middleware/user.middleware';
-import { createUserSchema, updateUserSchema } from './schema/user.schema';
+import {
+  createUserSchema,
+  followUserSchema,
+  updateUserSchema,
+} from './schema/user.schema';
 
 export class UsersRoutes extends CommonRoutesConfig {
   constructor(app: Application) {
@@ -35,6 +39,11 @@ export class UsersRoutes extends CommonRoutesConfig {
         UserMiddleware.userCantChangeAdmin,
         UserController.updateAuthUser
       );
+
+    this.app
+      .route('/api/users/follow')
+      .all(JwtMiddleware.validJWTNeeded, UserMiddleware.validateProfileExists)
+      .post(validateResource(followUserSchema), UserController.followUser);
 
     this.app
       .route('/api/users/:userId')
