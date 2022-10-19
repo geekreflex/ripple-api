@@ -5,8 +5,8 @@
   "description": "REST API for the ripple photo gallery",
   "license": "MIT",
   "scripts": {
-    "start": "node ./dist/app.js",
     "build": "rimraf ./dist && tsc",
+    "start": "node dist/app.js",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "debug": "export DEBUG=* && yarn run dev",
     "tsc": "./node_modules/typescript/bin/tsc"
