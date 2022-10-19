@@ -5,12 +5,10 @@
   "description": "REST API for the ripple photo gallery",
   "license": "MIT",
   "scripts": {
-    "start": "tsc && node dist/app.js",
+    "start": "node dist/app.js",
+    "build": "rimraf ./dist && tsc",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
-    "debug": "export DEBUG=* && yarn run dev",
-    "tsc": "./node_modules/typescript/bin/tsc",
-    "build": "tsc",
-    "postinstall": "yarn run tsc"
+    "debug": "export DEBUG=* && yarn run dev"
   },
   "dependencies": {
     "argon2": "^0.30.1",
@@ -23,6 +21,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.6.5",
     "pino": "^8.6.1",
+    "rimraf": "^3.0.2",
     "zod": "^3.19.1"
   },
   "devDependencies": {
