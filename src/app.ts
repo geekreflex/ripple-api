@@ -24,8 +24,8 @@ app.use(cors());
 app.use(express.json());
 app.use(helmet());
 
-app.get('/', (req, res) => {
-  res.send('Hello');
+app.get('/', (req: express.Request, res: express.Response) => {
+  res.status(200).send('Server is up and running...');
 });
 
 /**
