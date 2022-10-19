@@ -16,7 +16,7 @@ import { UsersRoutes } from './modules/users/users.routes.config';
 import { CollectionsRoutes } from './modules/collections/collection.routes.config';
 
 const app: Application = express();
-const port = 8484;
+const port = process.env.PORT || 8484;
 const routes: Array<CommonRoutesConfig> = [];
 const debugLog: debug.IDebugger = debug('app');
 
