@@ -15,7 +15,7 @@ class MongooseService {
   connectWithRetry = async () => {
     logger.info('Connecting to MongoDB (will retry if needed)');
     try {
-      await mongoose.connect('mongodb://localhost:27017/ripple-db');
+      await mongoose.connect(process.env.DB_URI);
       logger.info('MongoDB connected');
     } catch (error) {
       const retrySeconds = 5;
