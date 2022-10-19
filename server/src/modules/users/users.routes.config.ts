@@ -1,6 +1,7 @@
 import { Application } from 'express';
 import JwtMiddleware from '../auth/middleware/jwt.middleware';
 import { CommonRoutesConfig } from '../common/common.routes.config';
+import PermissionMiddleware from '../common/middleware/common.permission.middleware';
 import validateResource from '../common/middleware/validate.resource.middle';
 import UserController from './controllers/user.controller';
 import UserMiddleware from './middleware/user.middleware';
@@ -14,6 +15,11 @@ export class UsersRoutes extends CommonRoutesConfig {
   configureRoutes(): Application {
     this.app
       .route('/api/users')
+      .get(
+        JwtMiddleware.validJWTNeeded,
+        PermissionMiddleware.onlyAdminCanDoThisAction,
+        UserController.listUsers
+      )
       .post(
         validateResource(createUserSchema),
         UserMiddleware.validateSameEmailDoesntExit,
@@ -22,9 +28,24 @@ export class UsersRoutes extends CommonRoutesConfig {
 
     this.app
       .route('/api/users/profile')
-      .all(JwtMiddleware.validJWTNeeded, UserMiddleware.validateUserExists)
+      .all(JwtMiddleware.validJWTNeeded, UserMiddleware.validateProfileExists)
       .get(UserController.getAuthUser)
-      .put(validateResource(updateUserSchema), UserController.updateAuthUser);
+      .put(
+        validateResource(updateUserSchema),
+        UserMiddleware.userCantChangeAdmin,
+        UserController.updateAuthUser
+      );
+
+    this.app
+      .route('/api/users/:userId')
+      .all(JwtMiddleware.validJWTNeeded, UserMiddleware.validateUserExists)
+      .get(UserController.getUserById)
+      .put(
+        validateResource(updateUserSchema),
+        PermissionMiddleware.onlyAdminCanDoThisAction,
+        UserController.updateUserById
+      );
+
     return this.app;
   }
 }

@@ -1,4 +1,4 @@
-import { object, string } from 'zod';
+import { literal, object, string } from 'zod';
 
 export const createUserSchema = object({
   body: object({
@@ -25,6 +25,6 @@ export const updateUserSchema = object({
     lastName: string({
       required_error: 'Last name is required',
     }),
-    website: string().url(),
+    website: string().url().optional().or(literal('')),
   }),
 });

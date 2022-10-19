@@ -25,8 +25,18 @@ class UserController {
 
   async updateAuthUser(req: Request, res: Response) {
     const userId = res.locals.jwt.userId;
-    log(await UserService.updateById(userId, req.body));
-    return res.status(204).send();
+    const user = await UserService.updateById(userId, req.body);
+    res.status(200).send({ user });
+  }
+
+  async getUserById(req: Request, res: Response) {
+    const user = await UserService.readById(req.params.userId);
+    res.status(200).send({ user });
+  }
+
+  async updateUserById(req: Request, res: Response) {
+    const user = await UserService.updateById(req.params.userId, req.body);
+    res.status(200).send({ user });
   }
 }
 
