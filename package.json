@@ -8,8 +8,9 @@
     "start": "tsc && node dist/app.js",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "debug": "export DEBUG=* && yarn run dev",
-    "tsc": "tsc",
-    "postinstall": "npm run tsc"
+    "tsc": "./node_modules/typescript/bin/tsc",
+    "build": "tsc",
+    "postinstall": "yarn run tsc"
   },
   "dependencies": {
     "argon2": "^0.30.1",
