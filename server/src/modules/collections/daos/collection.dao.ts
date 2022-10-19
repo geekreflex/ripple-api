@@ -55,6 +55,25 @@ class CollectionDao {
       .populate('user')
       .exec();
   }
+
+  async deleteCollectionBy(collectionId: string) {
+    return this.Collection.deleteOne({ _id: collectionId }).exec();
+  }
+
+  async getUserPublicCollectionsById(userId: string) {
+    return this.Collection.find({ user: userId, private: false }).exec();
+  }
+
+  async getAuthUserCollectionsById(userId: string) {
+    return this.Collection.find({ user: userId }).exec();
+  }
+
+  async getCollections(limit = 100, page = 0) {
+    return this.Collection.find()
+      .limit(limit)
+      .skip(limit * page)
+      .exec();
+  }
 }
 
 export default new CollectionDao();

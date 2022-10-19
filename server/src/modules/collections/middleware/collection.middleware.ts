@@ -18,7 +18,24 @@ class CollectionMiddleware {
     }
   }
 
-  async onlyCollectionOwnerOrAdminCanDoThisAction(
+  async validateCollectionExists(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const collection = await CollectionService.readById(
+      req.params.collectionId
+    );
+    if (collection) {
+      next();
+    } else {
+      res.status(404).send({
+        errors: [`Collection ${req.params.collectionId} not found`],
+      });
+    }
+  }
+
+  async validateCollectionPrivacy(
     req: Request,
     res: Response,
     next: NextFunction

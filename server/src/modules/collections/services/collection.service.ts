@@ -16,6 +16,22 @@ class CollectionService {
   async readById(collectionId: string) {
     return CollectionDao.getCollectionById(collectionId);
   }
+
+  async deleteById(collectionId: string) {
+    return CollectionDao.deleteCollectionBy(collectionId);
+  }
+
+  async getUserPublicCollections(userId: string) {
+    return CollectionDao.getUserPublicCollectionsById(userId);
+  }
+
+  async getAuthUserCollections(userId: string) {
+    return CollectionDao.getAuthUserCollectionsById(userId);
+  }
+
+  async listCollections(limit: number, page: number) {
+    return CollectionDao.getCollections(limit, page);
+  }
 }
 
 export default new CollectionService();
