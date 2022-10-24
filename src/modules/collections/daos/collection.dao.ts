@@ -16,6 +16,8 @@ class CollectionDao {
       description: { type: String },
       user: { type: this.Schema.Types.ObjectId, ref: 'User' },
       private: { type: Boolean, default: false },
+      photos: [{ type: this.Schema.Types.ObjectId, ref: 'Photo' }],
+      slug: { type: String, required: true },
     },
     { timestamps: true }
   );

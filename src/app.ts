@@ -14,6 +14,7 @@ import helmet from 'helmet';
 import { AuthRoutes } from './modules/auth/auth.routes.config';
 import { UsersRoutes } from './modules/users/users.routes.config';
 import { CollectionsRoutes } from './modules/collections/collection.routes.config';
+import { UploadRoutes } from './modules/uploads/upload.routes.config';
 
 const app: Application = express();
 const port = process.env.PORT || 8484;
@@ -34,6 +35,7 @@ app.get('/', (req: express.Request, res: express.Response) => {
 routes.push(new UsersRoutes(app));
 routes.push(new AuthRoutes(app));
 routes.push(new CollectionsRoutes(app));
+routes.push(new UploadRoutes(app));
 
 app.listen(port, async () => {
   logger.info(`server started on http://localhost:${port}`);
